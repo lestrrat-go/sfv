@@ -2,7 +2,8 @@ package sfv
 
 import "fmt"
 
-// BareItemBuilder is used to build a BareItem with a specific type.
+// BareItemBuilder is a generic builder for creating BareItem instances with type safety.
+// It provides a fluent interface for setting values and handling errors during construction.
 type BareItemBuilder[B BareItem, T any] struct {
 	value B
 	// This is a horrible hack to allow us to
@@ -10,11 +11,16 @@ type BareItemBuilder[B BareItem, T any] struct {
 	err    error
 }
 
+// ItemBuilder is a builder for creating Item instances with parameters.
+// It wraps a BareItem and allows adding parameters in a fluent manner.
 type ItemBuilder struct {
 	value Item
 	err   error
 }
 
+// ToItem upgrades the BareItemBuilder to an ItemBuilder, allowing the addition
+// of parameters. Returns an ItemBuilder that can be used to add parameters
+// and build the final Item.
 func (bb *BareItemBuilder[B, T]) ToItem() *ItemBuilder {
 	if bb.err != nil {
 		return &ItemBuilder{err: bb.err}
@@ -25,6 +31,9 @@ func (bb *BareItemBuilder[B, T]) ToItem() *ItemBuilder {
 	}
 }
 
+// Value sets the value for the BareItem being built. Returns the same
+// BareItemBuilder for method chaining. If an error occurs during value
+// setting, it will be recorded and returned by Build().
 func (bb *BareItemBuilder[B, T]) Value(value T) *BareItemBuilder[B, T] {
 	if bb.err != nil {
 		return bb
@@ -35,6 +44,8 @@ func (bb *BareItemBuilder[B, T]) Value(value T) *BareItemBuilder[B, T] {
 	return bb
 }
 
+// Build constructs and returns the BareItem. Returns an error if any
+// step in the building process failed.
 func (bb *BareItemBuilder[B, T]) Build() (B, error) {
 	if bb.err != nil {
 		var zero B
@@ -43,6 +54,9 @@ func (bb *BareItemBuilder[B, T]) Build() (B, error) {
 	return bb.value, nil
 }
 
+// MustBuild constructs and returns the BareItem, panicking if any error
+// occurred during the building process. Use this when you are confident
+// that the building process will succeed.
 func (bb *BareItemBuilder[B, T]) MustBuild() B {
 	if bb.err != nil {
 		panic(bb.err)
@@ -71,6 +85,8 @@ func (bb *BareItemBuilder[B, T]) Parameter(k string, v BareItem) *ItemBuilder {
 	return &ib
 }
 
+// Build constructs and returns the Item. Returns an error if any
+// step in the building process failed.
 func (ib *ItemBuilder) Build() (Item, error) {
 	if ib.err != nil {
 		return nil, ib.err
@@ -78,6 +94,9 @@ func (ib *ItemBuilder) Build() (Item, error) {
 	return ib.value, nil
 }
 
+// MustBuild constructs and returns the Item, panicking if any error
+// occurred during the building process. Use this when you are confident
+// that the building process will succeed.
 func (ib *ItemBuilder) MustBuild() Item {
 	if ib.err != nil {
 		panic(ib.err)
@@ -85,6 +104,9 @@ func (ib *ItemBuilder) MustBuild() Item {
 	return ib.value
 }
 
+// Parameter adds a parameter to the Item being built. Returns the same
+// ItemBuilder for method chaining. If an error occurs during parameter
+// setting, it will be recorded and returned by Build().
 func (ib *ItemBuilder) Parameter(k string, v BareItem) *ItemBuilder {
 	if ib.err != nil {
 		return ib

@@ -67,6 +67,9 @@ func (iv uvalue[T]) GetValue(dst any) error {
 	return blackmagic.AssignIfCompatible(dst, iv.value)
 }
 
+// FullItem is a generic container that combines a BareItem with Parameters
+// to create a complete SFV Item. It serves as the base implementation for
+// all typed item aliases (StringItem, IntegerItem, etc.) in the SFV format.
 type FullItem[BT BareItem, UT any] struct {
 	bare    BT
 	valuefn func() UT

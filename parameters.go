@@ -25,6 +25,8 @@ func NewParameters() *Parameters {
 	}
 }
 
+// Len returns the number of parameters in the Parameters object.
+// Returns 0 if the Parameters object is nil.
 func (p *Parameters) Len() int {
 	if p == nil {
 		return 0
@@ -36,12 +38,16 @@ func (p *Parameters) Len() int {
 	return len(p.keys)
 }
 
+// Keys returns a copy of the parameter keys in the order they were added.
+// The returned slice is safe to modify without affecting the original Parameters.
 func (p *Parameters) Keys() []string {
 	ret := make([]string, len(p.keys))
 	copy(ret, p.keys)
 	return ret
 }
 
+// Get retrieves the value of a parameter by key and assigns it to dst.
+// Returns an error if the parameter is not found or if assignment fails.
 func (p *Parameters) Get(key string, dst any) error {
 	value, exists := p.Values[key]
 	if !exists {
@@ -50,6 +56,9 @@ func (p *Parameters) Get(key string, dst any) error {
 	return blackmagic.AssignIfCompatible(dst, value)
 }
 
+// Set adds or updates a parameter with the given key and value.
+// The value must be a BareItem. Returns an error if the Parameters
+// object is nil or if the value is nil.
 func (p *Parameters) Set(key string, value BareItem) error {
 	if p == nil {
 		return fmt.Errorf("cannot set parameter on nil Parameters")
@@ -66,6 +75,9 @@ func (p *Parameters) Set(key string, value BareItem) error {
 	return nil
 }
 
+// MarshalSFV implements the Marshaler interface for Parameters.
+// It encodes the parameters in the SFV format as semicolon-separated
+// key-value pairs with proper spacing.
 func (p *Parameters) MarshalSFV() ([]byte, error) {
 	if p == nil || p.Len() == 0 {
 		return []byte{}, nil

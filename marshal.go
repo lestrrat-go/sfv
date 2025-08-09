@@ -10,6 +10,9 @@ import (
 	"time"
 )
 
+// Encoder provides configurable encoding of SFV (Structured Field Value) data.
+// It allows customization of formatting options like parameter spacing to support
+// different specifications (standard SFV vs HTTP Message Signature format).
 type Encoder struct {
 	dst              io.Writer
 	parameterSpacing string // " " ---> "component; parameter", "" ---> "component;parameter"
@@ -78,6 +81,9 @@ func (enc *Encoder) postProcessParameters(data []byte) []byte {
 	return data
 }
 
+// Marshaler is the interface implemented by types that can marshal themselves
+// into valid SFV (Structured Field Value) format. Types implementing this
+// interface can be directly encoded using Marshal() or Encoder.Encode().
 type Marshaler interface { //nolint:iface
 	MarshalSFV() ([]byte, error)
 }

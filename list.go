@@ -68,11 +68,17 @@ func (ilb *InnerListBuilder) MustBuild() *InnerList {
 	return ilb.innerList
 }
 
+// InnerList represents a grouped sequence of Items with optional parameters
+// in the SFV format. InnerLists are used within Lists and Dictionaries to
+// group related items together as a single value.
 type InnerList struct {
 	values []Item
 	params *Parameters
 }
 
+// Add adds an item to the inner list. The item must be an Item or BareItem.
+// BareItems are automatically converted to Items. Returns an error if the
+// item type is not supported.
 func (il *InnerList) Add(in any) error {
 	var item Item
 	switch v := in.(type) {
@@ -148,10 +154,16 @@ func (il *InnerList) Parameters() *Parameters {
 	return il.params
 }
 
+// List represents an ordered sequence of Items and InnerLists in the SFV format.
+// Lists can contain Items (with optional parameters) and InnerLists as comma-separated
+// values according to RFC 9651.
 type List struct {
 	values []any
 }
 
+// Add adds an item to the list. The item must be an Item, BareItem, or *InnerList.
+// BareItems are automatically converted to Items. Returns an error if the
+// item type is not supported.
 func (l *List) Add(in any) error {
 	// Process the input to ensure it's a proper SFV item
 	switch v := in.(type) {

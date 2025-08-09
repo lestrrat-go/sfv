@@ -7,6 +7,9 @@ import (
 	"github.com/lestrrat-go/blackmagic"
 )
 
+// Dictionary represents an ordered map of string keys to values in the SFV format.
+// Values can be Items, BareItems, or InnerLists. Dictionary maintains insertion
+// order and serializes as semicolon-separated key=value pairs according to RFC 9651.
 type Dictionary struct {
 	keys   []string
 	values map[string]any
@@ -22,6 +25,9 @@ func NewDictionary() *Dictionary {
 	}
 }
 
+// Set adds or updates a key-value pair in the dictionary.
+// The value must be an Item, BareItem, or *InnerList.
+// Returns an error if the value type is not supported.
 func (d *Dictionary) Set(key string, value any) error {
 	switch value.(type) {
 	case Item, BareItem, *InnerList:
@@ -37,6 +43,8 @@ func (d *Dictionary) Set(key string, value any) error {
 	return nil
 }
 
+// GetValue retrieves the value associated with the given key and assigns
+// it to dst. Returns an error if the key is not found or if assignment fails.
 func (d *Dictionary) GetValue(key string, dst any) error {
 	value, exists := d.values[key]
 	if !exists {

@@ -10,6 +10,10 @@ import (
 	"github.com/lestrrat-go/sfv/internal/tokens"
 )
 
+// Value is the top-level interface for all SFV (Structured Field Value) types.
+// It represents any value that can be marshaled according to the SFV specification.
+// This includes Items, Lists, Dictionaries, and any custom types that implement
+// the Marshaler interface.
 type Value interface { //nolint:iface
 	Marshaler
 }
