@@ -615,11 +615,7 @@ LOOP:
 		if err != nil {
 			return nil, fmt.Errorf(`sfv: failed to parse numeric value as float: %w`, err)
 		}
-		bareItem, err := Decimal().Value(v * float64(sign)).Build()
-		if err != nil {
-			return nil, err
-		}
-		return bareItem, nil
+		return BareDecimal(v * float64(sign)), nil
 	}
 
 	if sb.Len() > maxIntegerDigits {
@@ -630,11 +626,7 @@ LOOP:
 	if err != nil {
 		return nil, fmt.Errorf(`sfv: failed to parse numeric value as integer: %w`, err)
 	}
-	bareItem, err := Integer().Value(int64(v * sign)).Build()
-	if err != nil {
-		return nil, err
-	}
-	return bareItem, nil
+	return BareInteger(int64(v * sign)), nil
 }
 
 // parseString parses a quoted string according to RFC 9651 Section 4.2.5

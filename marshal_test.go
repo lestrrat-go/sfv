@@ -274,7 +274,7 @@ func TestMarshalList(t *testing.T) {
 	var list sfv.List
 
 	list.Add(sfv.String("hello"))
-	list.Add(sfv.Integer().Value(42).MustBuild().ToItem())
+	list.Add(sfv.Integer(42))
 	list.Add(sfv.True().ToItem())
 
 	result, err := sfv.Marshal(list)
@@ -307,12 +307,12 @@ func TestItemMarshalSFVMethods(t *testing.T) {
 		},
 		{
 			name:     "Integer",
-			item:     sfv.Integer().Value(42).MustBuild(),
+			item:     sfv.BareInteger(42),
 			expected: "42",
 		},
 		{
 			name:     "Decimal",
-			item:     sfv.Decimal().Value(3.14).MustBuild(),
+			item:     sfv.BareDecimal(3.14),
 			expected: "3.14",
 		},
 		{
@@ -361,7 +361,7 @@ func TestCollectionMarshalSFVMethods(t *testing.T) {
 	// Test List.MarshalSFV()
 	var list sfv.List
 	list.Add(sfv.String("hello"))
-	list.Add(sfv.Integer().Value(42).MustBuild().ToItem())
+	list.Add(sfv.Integer(42))
 	list.Add(sfv.True().ToItem())
 
 	result, err := list.MarshalSFV()
@@ -378,7 +378,7 @@ func TestCollectionMarshalSFVMethods(t *testing.T) {
 	// Test Dictionary.MarshalSFV()
 	dict := sfv.NewDictionary()
 	dict.Set("name", sfv.String("John"))
-	dict.Set("age", sfv.Integer().Value(30).MustBuild().ToItem())
+	dict.Set("age", sfv.Integer(30))
 	dict.Set("active", sfv.True().ToItem())
 
 	result, err = dict.MarshalSFV()
@@ -414,7 +414,7 @@ func TestMarshalDictionary(t *testing.T) {
 	// Test marshaling an SFV Dictionary directly
 	dict := sfv.NewDictionary()
 	dict.Set("name", sfv.String("John"))
-	dict.Set("age", sfv.Integer().Value(30).MustBuild().ToItem())
+	dict.Set("age", sfv.Integer(30))
 
 	result, err := sfv.Marshal(dict)
 	if err != nil {

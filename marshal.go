@@ -135,17 +135,17 @@ func valueToSFV(v any) (Value, error) {
 		if val > maxSFVInteger || val < -maxSFVInteger {
 			return nil, fmt.Errorf("int value %d too large to marshal as SFV integer (max 15 decimal digits)", val)
 		}
-		return Integer().Value(val).Build()
+		return BareInteger(val), nil
 
 	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
 		val := rv.Uint()
 		if val > maxSFVInteger { // RFC 9651: max 15 decimal digits
 			return nil, fmt.Errorf("uint value %d too large to marshal as SFV integer (max 15 decimal digits)", val)
 		}
-		return Integer().Value(int64(val)).Build()
+		return BareInteger(int64(val)), nil
 
 	case reflect.Float32, reflect.Float64:
-		return Decimal().Value(rv.Float()).Build()
+		return BareDecimal(rv.Float()), nil
 
 	case reflect.String:
 		str := rv.String()

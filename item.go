@@ -32,13 +32,13 @@ func bareItemFrom(value any, stringMode int) (BareItem, error) {
 	case bool:
 		return Boolean().Value(v).Build()
 	case int:
-		return Integer().Value(int64(v)).Build()
+		return BareInteger(int64(v)), nil
 	case int64:
-		return Integer().Value(v).Build()
+		return BareInteger(v), nil
 	case float64:
-		return Decimal().Value(v).Build()
+		return BareDecimal(v), nil
 	case float32:
-		return Decimal().Value(float64(v)).Build()
+		return BareDecimal(float64(v)), nil
 	default:
 		return nil, fmt.Errorf("unsupported bare item type %T", v)
 	}
