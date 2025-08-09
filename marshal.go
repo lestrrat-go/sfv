@@ -176,7 +176,7 @@ func valueToSFV(v any) (Value, error) {
 		// Handle time.Time specially
 		if rv.Type() == reflect.TypeOf(time.Time{}) {
 			t := rv.Interface().(time.Time)
-			return Date().Value(t.Unix()).Build()
+			return BareDate(t.Unix()), nil
 		}
 		// Other structs become dictionaries with field names as keys
 		return structToDictionary(rv)

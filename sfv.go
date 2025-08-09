@@ -799,11 +799,7 @@ func (pctx *parseContext) parseDate() (*DateBareItem, error) {
 		return nil, fmt.Errorf("sfv: failed to convert date value to int64: %w", err)
 	}
 
-	bareItem, err := Date().Value(intValue).Build()
-	if err != nil {
-		return nil, err
-	}
-	return bareItem, nil
+	return BareDate(intValue), nil
 }
 
 // parseDisplayString parses a display string according to RFC 9651 Section 4.2.10

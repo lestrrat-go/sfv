@@ -332,7 +332,7 @@ func TestItemMarshalSFVMethods(t *testing.T) {
 		},
 		{
 			name:     "Date",
-			item:     sfv.Date().Value(1659578233).MustBuild(),
+			item:     sfv.BareDate(1659578233),
 			expected: "@1659578233",
 		},
 		{
