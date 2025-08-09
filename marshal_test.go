@@ -337,7 +337,7 @@ func TestItemMarshalSFVMethods(t *testing.T) {
 		},
 		{
 			name:     "DisplayString",
-			item:     sfv.DisplayString().Value("hello").MustBuild(),
+			item:     sfv.BareDisplayString("hello"),
 			expected: `%"hello"`,
 		},
 	}

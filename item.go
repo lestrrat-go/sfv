@@ -25,7 +25,7 @@ func bareItemFrom(value any, stringMode int) (BareItem, error) {
 		case bareItemTokenMode:
 			return BareToken(v), nil
 		case bareItemDisplayStringMode:
-			return DisplayString().Value(v).Build()
+			return BareDisplayString(v), nil
 		default:
 			return BareString(v), nil
 		}

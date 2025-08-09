@@ -855,11 +855,7 @@ func (pctx *parseContext) parseDisplayString() (*DisplayStringBareItem, error) {
 		} else if c == tokens.DoubleQuote {
 			// End of display string
 			// Decode as UTF-8
-			bareItem, err := DisplayString().Value(string(byteArray)).Build()
-			if err != nil {
-				return nil, err
-			}
-			return bareItem, nil
+			return BareDisplayString(string(byteArray)), nil
 		} else {
 			// Regular ASCII character
 			byteArray = append(byteArray, c)
