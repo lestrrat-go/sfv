@@ -30,7 +30,7 @@ func bareItemFrom(value any, stringMode int) (BareItem, error) {
 			return BareString(v), nil
 		}
 	case bool:
-		return Boolean().Value(v).Build()
+		return BareBoolean(v), nil
 	case int:
 		return BareInteger(int64(v)), nil
 	case int64:
