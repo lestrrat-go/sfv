@@ -256,7 +256,7 @@ func TestMarshalNil(t *testing.T) {
 
 func TestMarshalItem(t *testing.T) {
 	// Test marshaling an SFV Item directly
-	item := sfv.String().Value("hello").MustBuild().ToItem()
+	item := sfv.String("hello")
 	result, err := sfv.Marshal(item)
 	if err != nil {
 		t.Errorf("Marshal() unexpected error: %v", err)
@@ -273,7 +273,7 @@ func TestMarshalList(t *testing.T) {
 	// Test marshaling an SFV List directly
 	var list sfv.List
 
-	list.Add(sfv.String().Value("hello").MustBuild().ToItem())
+	list.Add(sfv.String("hello"))
 	list.Add(sfv.Integer().Value(42).MustBuild().ToItem())
 	list.Add(sfv.True().ToItem())
 
@@ -317,7 +317,7 @@ func TestItemMarshalSFVMethods(t *testing.T) {
 		},
 		{
 			name:     "String",
-			item:     sfv.String().Value("hello").MustBuild(),
+			item:     sfv.BareString("hello"),
 			expected: `"hello"`,
 		},
 		{
@@ -360,7 +360,7 @@ func TestItemMarshalSFVMethods(t *testing.T) {
 func TestCollectionMarshalSFVMethods(t *testing.T) {
 	// Test List.MarshalSFV()
 	var list sfv.List
-	list.Add(sfv.String().Value("hello").MustBuild().ToItem())
+	list.Add(sfv.String("hello"))
 	list.Add(sfv.Integer().Value(42).MustBuild().ToItem())
 	list.Add(sfv.True().ToItem())
 
@@ -377,7 +377,7 @@ func TestCollectionMarshalSFVMethods(t *testing.T) {
 
 	// Test Dictionary.MarshalSFV()
 	dict := sfv.NewDictionary()
-	dict.Set("name", sfv.String().Value("John").MustBuild().ToItem())
+	dict.Set("name", sfv.String("John"))
 	dict.Set("age", sfv.Integer().Value(30).MustBuild().ToItem())
 	dict.Set("active", sfv.True().ToItem())
 
@@ -395,8 +395,8 @@ func TestCollectionMarshalSFVMethods(t *testing.T) {
 	// Test InnerList.MarshalSFV()
 	var innerList sfv.InnerList
 
-	innerList.Add(sfv.String().Value("foo").MustBuild().ToItem())
-	innerList.Add(sfv.String().Value("bar").MustBuild().ToItem())
+	innerList.Add(sfv.String("foo"))
+	innerList.Add(sfv.String("bar"))
 
 	result, err = innerList.MarshalSFV()
 	if err != nil {
@@ -413,7 +413,7 @@ func TestCollectionMarshalSFVMethods(t *testing.T) {
 func TestMarshalDictionary(t *testing.T) {
 	// Test marshaling an SFV Dictionary directly
 	dict := sfv.NewDictionary()
-	dict.Set("name", sfv.String().Value("John").MustBuild().ToItem())
+	dict.Set("name", sfv.String("John"))
 	dict.Set("age", sfv.Integer().Value(30).MustBuild().ToItem())
 
 	result, err := sfv.Marshal(dict)

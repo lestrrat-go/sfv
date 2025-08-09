@@ -27,7 +27,7 @@ func bareItemFrom(value any, stringMode int) (BareItem, error) {
 		case bareItemDisplayStringMode:
 			return DisplayString().Value(v).Build()
 		default:
-			return String().Value(v).Build()
+			return BareString(v), nil
 		}
 	case bool:
 		return Boolean().Value(v).Build()

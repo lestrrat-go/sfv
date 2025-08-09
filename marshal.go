@@ -149,7 +149,7 @@ func valueToSFV(v any) (Value, error) {
 
 	case reflect.String:
 		str := rv.String()
-		return String().Value(str).Build()
+		return BareString(str), nil
 
 	case reflect.Slice:
 		if rv.Type().Elem().Kind() == reflect.Uint8 {

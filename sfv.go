@@ -660,7 +660,7 @@ func (pctx *parseContext) parseString() (BareItem, error) {
 			pctx.advance()
 			sb.WriteByte(next)
 		} else if c == tokens.DoubleQuote {
-			return String().Value(sb.String()).Build()
+			return BareString(sb.String()), nil
 		} else if c <= 0x1f || c >= 0x7f {
 			return nil, fmt.Errorf("sfv: invalid character in string: %c", c)
 		} else {
