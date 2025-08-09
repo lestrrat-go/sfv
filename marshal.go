@@ -154,7 +154,7 @@ func valueToSFV(v any) (Value, error) {
 	case reflect.Slice:
 		if rv.Type().Elem().Kind() == reflect.Uint8 {
 			// []byte becomes ByteSequence
-			return ByteSequence().Value(rv.Bytes()).Build()
+			return BareByteSequence(rv.Bytes()), nil
 		}
 		// Other slices become Lists
 		return sliceToList(rv)
@@ -164,7 +164,7 @@ func valueToSFV(v any) (Value, error) {
 			// [N]byte becomes ByteSequence
 			bytes := make([]byte, rv.Len())
 			reflect.Copy(reflect.ValueOf(bytes), rv)
-			return ByteSequence().Value(bytes).Build()
+			return BareByteSequence(bytes), nil
 		}
 		// Other arrays become Lists
 		return arrayToList(rv)

@@ -749,11 +749,7 @@ func (pctx *parseContext) parseByteSequence() (*ByteSequenceBareItem, error) {
 	if err != nil {
 		return nil, fmt.Errorf("sfv: failed to decode base64: %w", err)
 	}
-	bareItem, err := ByteSequence().Value(decoded).Build()
-	if err != nil {
-		return nil, err
-	}
-	return bareItem, nil
+	return BareByteSequence(decoded), nil
 }
 
 // parseBoolean parses a boolean according to RFC 9651 Section 4.2.8

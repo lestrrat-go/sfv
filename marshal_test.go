@@ -327,7 +327,7 @@ func TestItemMarshalSFVMethods(t *testing.T) {
 		},
 		{
 			name:     "ByteSequence",
-			item:     sfv.ByteSequence().Value([]byte("hello")).MustBuild(),
+			item:     sfv.BareByteSequence([]byte("hello")),
 			expected: ":aGVsbG8=:",
 		},
 		{
