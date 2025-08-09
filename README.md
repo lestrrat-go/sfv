@@ -160,12 +160,6 @@ Please make sure to include tests that exercise the changes you made.
 
 Please try [discussions](https://github.com/lestrrat-go/sfv/discussions) first.
 
-# Credits
-
-* Work on this library was inspired by the need for proper RFC 9651 support in HTTP libraries
-* RFC 9651 test vectors helped ensure correctness of the implementation
-* Thanks to all contributors who have helped improve this project
-
 # License
 
 MIT License. See LICENSE file for details.
