@@ -160,11 +160,6 @@ Please make sure to include tests that exercise the changes you made.
 
 Please try [discussions](https://github.com/lestrrat-go/sfv/discussions) first.
 
-# Related Modules
-
-* [github.com/lestrrat-go/jwx](https://github.com/lestrrat-go/jwx) - Comprehensive JOSE (JWT/JWS/JWE/JWK/JWA) implementation
-* [github.com/lestrrat-go/httprc](https://github.com/lestrrat-go/httprc) - HTTP resource caching with structured headers
-
 # Credits
 
 * Work on this library was inspired by the need for proper RFC 9651 support in HTTP libraries
