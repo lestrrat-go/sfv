@@ -9,7 +9,7 @@ import (
 // with optional parameters.
 //
 // DisplayStringItem implements the Item interface.
-type DisplayStringItem = fullItem[*DisplayStringBareItem, string]
+type DisplayStringItem = FullItem[*DisplayStringBareItem, string]
 
 var _ Item = (*DisplayStringItem)(nil)
 
@@ -48,7 +48,7 @@ func (d *DisplayStringBareItem) toItem() *DisplayStringItem {
 // If you need a full display string item (with parameters), use DisplayString() instead.
 func BareDisplayString(s string) *DisplayStringBareItem {
 	var v DisplayStringBareItem
-	v.SetValue(s)
+	_ = v.SetValue(s)
 	return &v
 }
 

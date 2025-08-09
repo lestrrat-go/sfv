@@ -10,7 +10,7 @@ import (
 	"github.com/lestrrat-go/sfv/internal/tokens"
 )
 
-type Value interface {
+type Value interface { //nolint:iface
 	Marshaler
 }
 
@@ -54,6 +54,7 @@ func ParseDictionary(data []byte) (*Dictionary, error) {
 	if err != nil {
 		return nil, err
 	}
+	//nolint:forcetypeassert
 	return v.(*Dictionary), nil
 }
 
@@ -62,6 +63,7 @@ func ParseItem(data []byte) (Item, error) {
 	if err != nil {
 		return nil, err
 	}
+	//nolint:forcetypeassert
 	return v.(Item), nil
 }
 

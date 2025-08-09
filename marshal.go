@@ -76,7 +76,7 @@ func (enc *Encoder) postProcessParameters(data []byte) []byte {
 	return data
 }
 
-type Marshaler interface {
+type Marshaler interface { //nolint:iface
 	MarshalSFV() ([]byte, error)
 }
 
@@ -110,6 +110,7 @@ func valueToSFV(v any) (Value, error) {
 
 	switch v := v.(type) {
 	case Item, BareItem, *InnerList, *List, *Dictionary:
+		//nolint:forcetypeassert
 		return v.(Value), nil // Already an SFV type
 	}
 
@@ -175,6 +176,7 @@ func valueToSFV(v any) (Value, error) {
 	case reflect.Struct:
 		// Handle time.Time specially
 		if rv.Type() == reflect.TypeOf(time.Time{}) {
+			//nolint:forcetypeassert
 			t := rv.Interface().(time.Time)
 			return BareDate(t.Unix()), nil
 		}
@@ -186,43 +188,8 @@ func valueToSFV(v any) (Value, error) {
 	}
 }
 
-// isValidToken checks if a string can be represented as a token
-// Be very conservative - only treat obvious identifiers as tokens
-func isValidToken(s string) bool {
-	if len(s) == 0 {
-		return false
-	}
-
-	// First character must be alpha or *
-	first := s[0]
-	if !((first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z') || first == '*') {
-		return false
-	}
-
-	// Only allow alphanumeric plus underscore
-	for i := 1; i < len(s); i++ {
-		c := s[i]
-		if !((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_') {
-			return false
-		}
-	}
-
-	/*
-		// Whitelist approach - only allow specific known tokens
-		knownTokens := []string{"token", "sugar", "tea", "rum", "enabled", "disabled", "token123"}
-		for _, token := range knownTokens {
-			if s == token {
-				return true
-			}
-		}
-	*/
-
-	return false
-}
-
 // sliceToList converts a slice to an SFV List
 func sliceToList(rv reflect.Value) (*List, error) {
-	fmt.Printf("sliceToList: %#v\n", rv.Interface())
 	values := make([]any, rv.Len())
 	for i := range rv.Len() {
 		elem := rv.Index(i)
@@ -234,7 +201,6 @@ func sliceToList(rv reflect.Value) (*List, error) {
 		values[i] = sfvValue
 	}
 	l := &List{values: values}
-	fmt.Printf("resulting List: %#v\n", l)
 	return l, nil
 }
 
@@ -300,7 +266,7 @@ func mapToDictionary(rv reflect.Value) (*Dictionary, error) {
 		case *List:
 			// Convert List to InnerList for dictionary
 			innerList := &InnerList{values: make([]Item, 0)}
-			for i := 0; i < v.Len(); i++ {
+			for i := range v.Len() {
 				if val, ok := v.Get(i); ok {
 					if item, ok := val.(Item); ok {
 						innerList.values = append(innerList.values, item)

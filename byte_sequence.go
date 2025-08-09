@@ -9,7 +9,7 @@ import (
 // with optional parameters.
 //
 // ByteSequenceItem implements the Item interface.
-type ByteSequenceItem = fullItem[*ByteSequenceBareItem, []byte]
+type ByteSequenceItem = FullItem[*ByteSequenceBareItem, []byte]
 
 var _ Item = (*ByteSequenceItem)(nil)
 
@@ -48,7 +48,7 @@ func (b *ByteSequenceBareItem) toItem() *ByteSequenceItem {
 // If you need a full byte sequence item (with parameters), use ByteSequence() instead.
 func BareByteSequence(b []byte) *ByteSequenceBareItem {
 	var v ByteSequenceBareItem
-	v.SetValue(b)
+	_ = v.SetValue(b)
 	return &v
 }
 

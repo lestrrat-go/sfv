@@ -63,29 +63,29 @@ func (iv uvalue[T]) GetValue(dst any) error {
 	return blackmagic.AssignIfCompatible(dst, iv.value)
 }
 
-type fullItem[BT BareItem, UT any] struct {
+type FullItem[BT BareItem, UT any] struct {
 	bare    BT
 	valuefn func() UT
 	params  *Parameters
 }
 
-func (fi *fullItem[BT, UT]) Parameters() *Parameters {
+func (fi *FullItem[BT, UT]) Parameters() *Parameters {
 	return fi.params
 }
 
-func (fi *fullItem[BT, UT]) Value() UT {
+func (fi *FullItem[BT, UT]) Value() UT {
 	return fi.valuefn()
 }
 
-func (item *fullItem[BT, UT]) MarshalSFV() ([]byte, error) {
-	bi, err := item.bare.MarshalSFV()
+func (fi *FullItem[BT, UT]) MarshalSFV() ([]byte, error) {
+	bi, err := fi.bare.MarshalSFV()
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling bare item: %w", err)
 	}
 
 	// Add parameters if any
-	if item.params != nil && item.params.Len() > 0 {
-		paramBytes, err := item.params.MarshalSFV()
+	if fi.params != nil && fi.params.Len() > 0 {
+		paramBytes, err := fi.params.MarshalSFV()
 		if err != nil {
 			return nil, err
 		}
@@ -95,29 +95,29 @@ func (item *fullItem[BT, UT]) MarshalSFV() ([]byte, error) {
 	return bi, nil
 }
 
-func (item *fullItem[BT, UT]) GetValue(dst any) error {
-	return item.bare.GetValue(dst)
+func (fi *FullItem[BT, UT]) GetValue(dst any) error {
+	return fi.bare.GetValue(dst)
 }
 
-func (item *fullItem[BT, UT]) Type() int {
-	return item.bare.Type()
+func (fi *FullItem[BT, UT]) Type() int {
+	return fi.bare.Type()
 }
 
-func (item *fullItem[BT, UT]) Parameter(name string, value any) error {
+func (fi *FullItem[BT, UT]) Parameter(name string, value any) error {
 	bi, err := bareItemFrom(value, bareItemTokenMode)
 	if err != nil {
 		return fmt.Errorf("failed to create bare item for parameter %s: %w", name, err)
 	}
 
-	if err := item.params.Set(name, bi); err != nil {
+	if err := fi.params.Set(name, bi); err != nil {
 		return fmt.Errorf("failed to set parameter %s: %v", name, err)
 	}
 	return nil
 }
 
-func (item *fullItem[BT, UT]) With(params *Parameters) Item {
-	return &fullItem[BT, UT]{
-		bare:   item.bare,
+func (fi *FullItem[BT, UT]) With(params *Parameters) Item {
+	return &FullItem[BT, UT]{
+		bare:   fi.bare,
 		params: params,
 	}
 }
@@ -138,7 +138,7 @@ type CoreItem interface {
 
 // A BareItem represents a bare item, which is the itemValue plus the item
 // type. A bare item cannot carry parameters. However, it _can_ be upgraded
-// to a full Item by calling With().
+// to a full Item by calling ToItem().
 type BareItem interface {
 	CoreItem
 

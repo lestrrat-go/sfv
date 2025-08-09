@@ -8,7 +8,7 @@ import (
 // with optional parameters.
 //
 // StringItem implements the Item interface.
-type StringItem = fullItem[*StringBareItem, string]
+type StringItem = FullItem[*StringBareItem, string]
 
 var _ Item = (*StringItem)(nil)
 
@@ -47,7 +47,7 @@ func (s *StringBareItem) toItem() *StringItem {
 // If you need a full string item (with parameters), use String() instead.
 func BareString(s string) *StringBareItem {
 	var v StringBareItem
-	v.SetValue(s)
+	_ = v.SetValue(s)
 	return &v
 }
 

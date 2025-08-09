@@ -337,7 +337,7 @@ func TestRFC9651SpecificExamples(t *testing.T) {
 				// Multi-item list
 				require.Greater(t, list.Len(), 1, "Expected multiple items")
 				// Check each item matches expected type
-				for i := 0; i < list.Len(); i++ {
+				for i := range list.Len() {
 					value, ok := list.Get(i)
 					require.True(t, ok, "Failed to get list item %d", i)
 					item, ok := value.(sfv.Item)
@@ -414,7 +414,7 @@ func TestRFC9651InnerLists(t *testing.T) {
 			require.Greater(t, list.Len(), 0, "Expected non-empty list for: %s", test.description)
 
 			// Verify that we have inner lists
-			for i := 0; i < list.Len(); i++ {
+			for i := range list.Len() {
 				value, ok := list.Get(i)
 				require.True(t, ok, "Failed to get list item %d", i)
 				innerList, ok := value.(*sfv.InnerList)
@@ -467,7 +467,7 @@ func TestRFC9651Parameters(t *testing.T) {
 
 			// Check that at least one item has parameters
 			foundParams := false
-			for i := 0; i < list.Len(); i++ {
+			for i := range list.Len() {
 				value, ok := list.Get(i)
 				require.True(t, ok, "Failed to get list item %d", i)
 				if item, ok := value.(sfv.Item); ok {

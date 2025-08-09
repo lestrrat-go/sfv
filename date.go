@@ -9,7 +9,7 @@ import (
 // with optional parameters.
 //
 // DateItem implements the Item interface.
-type DateItem = fullItem[*DateBareItem, int64]
+type DateItem = FullItem[*DateBareItem, int64]
 
 var _ Item = (*DateItem)(nil)
 
@@ -48,7 +48,7 @@ func (d *DateBareItem) toItem() *DateItem {
 // If you need a full date item (with parameters), use Date() instead.
 func BareDate(timestamp int64) *DateBareItem {
 	var v DateBareItem
-	v.SetValue(timestamp)
+	_ = v.SetValue(timestamp)
 	return &v
 }
 

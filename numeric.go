@@ -10,7 +10,7 @@ import (
 // with optional parameters.
 //
 // DecimalItem implements the Item interface.
-type DecimalItem = fullItem[*DecimalBareItem, float64]
+type DecimalItem = FullItem[*DecimalBareItem, float64]
 
 var _ Item = (*DecimalItem)(nil)
 
@@ -49,7 +49,7 @@ func (d *DecimalBareItem) toItem() *DecimalItem {
 // If you need a full decimal item (with parameters), use Decimal() instead.
 func BareDecimal(f float64) *DecimalBareItem {
 	var v DecimalBareItem
-	v.SetValue(f)
+	_ = v.SetValue(f)
 	return &v
 }
 
@@ -85,7 +85,7 @@ func (d DecimalBareItem) Type() int {
 // with optional parameters.
 //
 // IntegerItem implements the Item interface.
-type IntegerItem = fullItem[*IntegerBareItem, int64]
+type IntegerItem = FullItem[*IntegerBareItem, int64]
 
 var _ Item = (*IntegerItem)(nil)
 
@@ -124,7 +124,7 @@ func (i *IntegerBareItem) toItem() *IntegerItem {
 // If you need a full integer item (with parameters), use Integer() instead.
 func BareInteger(i int64) *IntegerBareItem {
 	var v IntegerBareItem
-	v.SetValue(i)
+	_ = v.SetValue(i)
 	return &v
 }
 

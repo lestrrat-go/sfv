@@ -1,8 +1,8 @@
 package sfv
 
 import (
+	"bytes"
 	"fmt"
-	"strings"
 
 	"github.com/lestrrat-go/blackmagic"
 )
@@ -48,15 +48,23 @@ func (d *Dictionary) MarshalSFV() ([]byte, error) {
 		return []byte{}, nil
 	}
 
-	var parts []string
+	var buf bytes.Buffer
+	first := true
+
 	for _, key := range d.keys {
 		var value any
 		if err := d.GetValue(key, &value); err != nil {
 			continue
 		}
 
-		var sb strings.Builder
-		sb.WriteString(key)
+		// Add separator between dictionary entries
+		if !first {
+			buf.WriteString(", ")
+		}
+		first = false
+
+		// Write the key
+		buf.WriteString(key)
 
 		// Check if this is a Boolean true value (bare key)
 		isBareKey := false
@@ -85,12 +93,12 @@ func (d *Dictionary) MarshalSFV() ([]byte, error) {
 				if err != nil {
 					return nil, fmt.Errorf("error marshaling parameters for dictionary key %q: %w", key, err)
 				}
-				sb.Write(paramBytes)
+				buf.Write(paramBytes)
 			}
 			// BareItems don't have parameters, so no need to handle that case
 		} else {
 			// Regular values - include equals and full marshaling
-			sb.WriteByte('=')
+			buf.WriteByte('=')
 			var valueBytes []byte
 			var err error
 
@@ -111,13 +119,11 @@ func (d *Dictionary) MarshalSFV() ([]byte, error) {
 				return nil, fmt.Errorf("error marshaling dictionary value for key %q: %w", key, err)
 			}
 
-			sb.Write(valueBytes)
+			buf.Write(valueBytes)
 		}
-
-		parts = append(parts, sb.String())
 	}
 
-	return []byte(strings.Join(parts, ", ")), nil
+	return buf.Bytes(), nil
 }
 
 // Keys returns the ordered list of keys in the dictionary

@@ -6,7 +6,7 @@ import "github.com/lestrrat-go/blackmagic"
 // with optional parameters.
 //
 // BooleanItem implements the Item interface.
-type BooleanItem = fullItem[BooleanBareItem, bool]
+type BooleanItem = FullItem[BooleanBareItem, bool]
 
 var _ Item = (*BooleanItem)(nil)
 

@@ -167,7 +167,6 @@ func (l *List) Add(in any) error {
 // MarshalSFV implements the Marshaler interface for List
 func (l List) MarshalSFV() ([]byte, error) {
 	if l.Len() == 0 {
-		//nolint: nilnil
 		return nil, nil
 	}
 

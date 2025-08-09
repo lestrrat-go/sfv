@@ -8,7 +8,7 @@ import (
 // with optional parameters.
 //
 // TokenItem implements the Item interface.
-type TokenItem = fullItem[*TokenBareItem, string]
+type TokenItem = FullItem[*TokenBareItem, string]
 
 var _ Item = (*TokenItem)(nil)
 
@@ -47,7 +47,7 @@ func (t *TokenBareItem) toItem() *TokenItem {
 // If you need a full token item (with parameters), use Token() instead.
 func BareToken(s string) *TokenBareItem {
 	var v TokenBareItem
-	v.SetValue(s)
+	_ = v.SetValue(s)
 	return &v
 }
 
