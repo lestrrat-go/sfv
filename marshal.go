@@ -15,7 +15,9 @@ type Encoder struct {
 	parameterSpacing string // " " ---> "component; parameter", "" ---> "component;parameter"
 }
 
-// NewEncoder returns a new encoder with default settings (standard SFV formatting with spaces)
+// NewEncoder creates a new Encoder with default settings for encoding
+// Structured Field Values. The default format uses standard SFV spacing
+// with spaces after semicolons in parameters.
 func NewEncoder(dst io.Writer) *Encoder {
 	return &Encoder{
 		dst:              dst,
@@ -80,6 +82,10 @@ type Marshaler interface { //nolint:iface
 	MarshalSFV() ([]byte, error)
 }
 
+// Marshal encodes the given value as a Structured Field Value and returns
+// the encoded bytes. The value can be any Go type that can be converted to
+// an SFV type (Item, List, Dictionary, etc.) or any type that implements
+// the Marshaler interface.
 func Marshal(v any) ([]byte, error) {
 	if v == nil {
 		return nil, nil

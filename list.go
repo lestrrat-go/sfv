@@ -11,7 +11,10 @@ type InnerListBuilder struct {
 	err       error
 }
 
-// NewInnerListBuilder creates a new InnerListBuilder
+// NewInnerListBuilder creates a new InnerListBuilder for building
+// InnerList objects with items and optional parameters. InnerLists
+// are used within Structured Field Lists and Dictionaries to group
+// related items together.
 func NewInnerListBuilder() *InnerListBuilder {
 	return &InnerListBuilder{
 		innerList: &InnerList{

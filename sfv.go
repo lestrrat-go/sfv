@@ -54,8 +54,11 @@ func ParseDictionary(data []byte) (*Dictionary, error) {
 	if err != nil {
 		return nil, err
 	}
-	//nolint:forcetypeassert
-	return v.(*Dictionary), nil
+	dict, ok := v.(*Dictionary)
+	if !ok {
+		return nil, fmt.Errorf("expected *Dictionary, got %T", v)
+	}
+	return dict, nil
 }
 
 func ParseItem(data []byte) (Item, error) {
@@ -63,8 +66,11 @@ func ParseItem(data []byte) (Item, error) {
 	if err != nil {
 		return nil, err
 	}
-	//nolint:forcetypeassert
-	return v.(Item), nil
+	item, ok := v.(Item)
+	if !ok {
+		return nil, fmt.Errorf("expected Item, got %T", v)
+	}
+	return item, nil
 }
 
 func (pctx *parseContext) init(data []byte, mode int) {

@@ -6,6 +6,10 @@ import (
 	"github.com/lestrrat-go/blackmagic"
 )
 
+// BareItemFrom creates a BareItem from the given Go value. This function
+// converts common Go types (string, bool, int, int64, float64, float32)
+// to their corresponding SFV bare item types. For strings, it creates
+// a StringBareItem by default.
 func BareItemFrom(value any) (BareItem, error) {
 	return bareItemFrom(value, 0)
 }

@@ -15,6 +15,9 @@ type Parameters struct {
 	Values map[string]BareItem
 }
 
+// NewParameters creates a new empty Parameters object. Parameters
+// represent the optional parameters that can be attached to Items
+// and InnerLists in Structured Field Values.
 func NewParameters() *Parameters {
 	return &Parameters{
 		keys:   make([]string, 0),

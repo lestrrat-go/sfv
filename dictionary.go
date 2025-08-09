@@ -12,6 +12,9 @@ type Dictionary struct {
 	values map[string]any
 }
 
+// NewDictionary creates a new empty Dictionary. A Dictionary represents
+// a Structured Field Dictionary, which is an ordered map of string keys
+// to values (Items, BareItems, or InnerLists).
 func NewDictionary() *Dictionary {
 	return &Dictionary{
 		keys:   make([]string, 0),
