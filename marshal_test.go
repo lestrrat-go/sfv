@@ -63,7 +63,7 @@ func TestMarshal(t *testing.T) {
 				tok.Parameter("param", "value")
 				return tok
 			},
-			expected: "token; param=value",
+			expected: `token; param="value"`,
 		},
 		{
 			name:     "Token with numbers",

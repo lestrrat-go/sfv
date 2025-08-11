@@ -111,7 +111,7 @@ func (fi *FullItem[BT, UT]) Type() int {
 }
 
 func (fi *FullItem[BT, UT]) Parameter(name string, value any) error {
-	bi, err := bareItemFrom(value, bareItemTokenMode)
+	bi, err := bareItemFrom(value, bareItemStringMode)
 	if err != nil {
 		return fmt.Errorf("failed to create bare item for parameter %s: %w", name, err)
 	}
