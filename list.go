@@ -5,7 +5,6 @@ import (
 	"fmt"
 )
 
-
 // InnerList represents a grouped sequence of Items with optional parameters
 // in the SFV format. InnerLists are used within Lists and Dictionaries to
 // group related items together as a single value.
