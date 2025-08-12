@@ -14,6 +14,16 @@ type InnerList struct {
 	params *Parameters
 }
 
+// NewInnerList creates a new empty InnerList with properly initialized parameters.
+// An InnerList represents a grouped sequence of Items with optional parameters
+// in the SFV format.
+func NewInnerList() *InnerList {
+	return &InnerList{
+		values: make([]Item, 0),
+		params: NewParameters(),
+	}
+}
+
 // Add adds an item to the inner list. The item must be an Item or BareItem.
 // BareItems are automatically converted to Items. Returns an error if the
 // item type is not supported.
