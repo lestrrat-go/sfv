@@ -1,6 +1,8 @@
 module github.com/lestrrat-go/sfv
 
-go 1.24.4
+go 1.23.0
+
+toolchain go1.23.6
 
 require (
 	github.com/lestrrat-go/blackmagic v1.0.4
